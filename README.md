@@ -68,16 +68,7 @@ If it is a first order simulation then,
 * Update rule: If liberal rule is passed, then president **and** chancellor are **not** fascists.
 * Update rule: If president is fascist, then it **implies** his chancellor is also fascist.
 
-Higher order of simulations will have strategies implemented in an interative manner as to keep the complexity of the simulation in check.
-
-
-
-
-
-
-
-
-
+Higher order of simulations will have strategies implemented in an iterative manner as to keep the complexity of the simulation in check.
 
 
 ## Results
