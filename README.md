@@ -59,7 +59,19 @@ We experiment with different orders by implementing more complex strategies base
 
 If it is a first order simulation then,
 
-* 
+* Fascist president chooses a fascist chancellor.
+* Fascist always passes a fascist policy.
+* Liberals vote no, if they believe the president or chancellor is a fascist, yes otherwise.
+* Liberal president chooses a player who he believes is **not** a fascist.
+* Liberals always vote a liberal policy.
+* Update rule: If fascist rule is passed, then president is fascist **or** chancellor is fascist.
+* Update rule: If liberal rule is passed, then president **and** chancellor are **not** fascists.
+* Update rule: If president is fascist, then it **implies** his chancellor is also fascist.
+
+Higher order of simulations will have strategies implemented in an interative manner as to keep the complexity of the simulation in check.
+
+
+
 
 
 
@@ -69,8 +81,8 @@ If it is a first order simulation then,
 
 
 ## Results
-To do.
+Coming Soon..
 
 
 ## Discussion
-To do.
+Coming Soon...
