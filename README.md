@@ -38,8 +38,10 @@ The model initially is created with <img src="https://render.githubusercontent.c
 There are a total of 3 public announcements in the game.
 
 1.  President announcing/selecting the chancellor. (If a president is known to be a fascist, then automatically his chancellor is a fascist)
-2. 
-2.
+2. Voting results announcement to know if the government(President and chancellor) can select policies or not. Voting is only as yes/no, and only the number of votes for yes/no is shown, but each player's vote is kept anonymous. (Players will remember this)
+3.Public announcement of Policy chosen.(As of now there is no strategy where a fascist will choose a liberal policy).
+
+
 
 
 
