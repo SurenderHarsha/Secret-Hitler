@@ -28,10 +28,20 @@ The multi-agent simulation's progression through a game is round-based. Agents a
 | **President votes Facist**   |          Facist         |         Facist         |
 
 ### Epistemic Model
+We assume and model the players to play optimally to reduce complication i.e liberals always vote for liberal policies etc.
 #### Model Variables
 Each state 'S' has 'n' atoms where 'n' is the number of players in the game, each atom represents the faction of the players with '1' being a player is a 'Fascist' and '0' being a player is a 'Liberal'. 
 
-The model initially is created with <img src="https://render.githubusercontent.com/render/math?math=2^n">
+The model initially is created with <img src="https://render.githubusercontent.com/render/math?math=2^n"> states. The number of liberals is always greater than number of fascists. When the game begins, the fascists get to know each other and all the fascist relations except reflexive relations are eliminated. Relation set for a player consists of all the possible parties of other players, as the game progresses, these relations are eliminated.
+
+#### Public Announcements
+There are a total of 3 public announcements in the game.
+
+1.  President announcing/selecting the chancellor. (If a president is known to be a fascist, then automatically his chancellor is a fascist)
+2. 
+2.
+
+
 
 
 ## Results
