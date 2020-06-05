@@ -28,7 +28,7 @@ The multi-agent simulation's progression through a game is round-based. Agents a
 | **President votes Facist**   |          Facist         |         Facist         |
 
 ### Epistemic Model
-We assume and model the players to play optimally to reduce complication i.e liberals always vote for liberal policies etc.
+We assume and model the players to play optimally to reduce complication, the game is straight-forward and we attempt to gradually add increasing layers of complexity like strategies.
 #### Model Variables
 Each state 'S' has 'n' atoms where 'n' is the number of players in the game, each atom represents the faction of the players with '1' being a player is a 'Fascist' and '0' being a player is a 'Liberal'. 
 
@@ -39,7 +39,29 @@ There are a total of 3 public announcements in the game.
 
 1.  President announcing/selecting the chancellor. (If a president is known to be a fascist, then automatically his chancellor is a fascist)
 2. Voting results announcement to know if the government(President and chancellor) can select policies or not. Voting is only as yes/no, and only the number of votes for yes/no is shown, but each player's vote is kept anonymous. (Players will remember this)
-3. Public announcement of Policy chosen.(As of now there is no strategy where a fascist will choose a liberal policy).
+3. Public announcement of Policy chosen.(As of now there is no strategy where a fascist will choose a liberal policy, we will implement this policy later on).
+
+After each public announcement, the model is updated with excluded relations, if at any stage, only the real world/state is left, the liberals automatically win as everyone knows who everyone is(this is very unlikely).
+
+#### Beliefs and Update rules
+The kripke models are updated after every public announcement and after every round. Update rules dictate when a relation should be removed/changed. For example, we say agent A believes that agent B is fascist as it has voted for a fascist policy two times in a row.
+
+We use belief in our models rather than knowledge for liberal agents as no liberal agent can know for sure about the identity of its peers. We can also say fascists have knowledge of who the other fascists are and also who the liberals are.
+
+#### Order of knowledge
+We experiment with different orders by implementing more complex strategies based on the order we are simulating. If it is a zero order simulation then,
+
+* Fascist presidents choose a fascist chancellor.
+* Fascists always pass fascist policy.
+* Liberals vote randomly, yes or no for the government.
+* Liberal president chooses a random player as chancellor.
+* Liberals always vote liberal policy.
+
+If it is a first order simulation then,
+
+* 
+
+
 
 
 
