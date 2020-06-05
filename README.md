@@ -28,7 +28,10 @@ The multi-agent simulation's progression through a game is round-based. Agents a
 | **President votes Facist**   |          Facist         |         Facist         |
 
 ### Epistemic Model
-To do.
+#### Model Variables
+Each state 'S' has 'n' atoms where 'n' is the number of players in the game, each atom represents the faction of the players with '1' being a player is a 'Fascist' and '0' being a player is a 'Liberal'. 
+
+The model initially is created with 2^n
 
 
 ## Results
