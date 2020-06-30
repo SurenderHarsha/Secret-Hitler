@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[130]:
+# In[139]:
 
 
 import mlsolver
@@ -10,18 +10,18 @@ from itertools import combinations
 from random import randrange, choice
 
 
-# In[131]:
+# In[140]:
 
 
 # Configuration
 # The way the roles are assigned: players 0..n_fascists are fascist, the other players are liberals
 n_players = 5
-n_fascists = 1
+n_fascists = 2
 fascist_wins_needed = 5
 liberal_wins_needed = 5
 
 
-# In[132]:
+# In[141]:
 
 
 # Utility functions
@@ -51,7 +51,7 @@ def add_symmetric_edges(relations):
     return result
 
 
-# In[133]:
+# In[142]:
 
 
 # Initialize the worlds
@@ -65,7 +65,7 @@ worlds = [World("{}".format(idx), { atom: True for atom in atoms}) for idx, atom
 n_worlds = len(worlds)
 
 
-# In[134]:
+# In[143]:
 
 
 # Initialize the relations
@@ -82,7 +82,7 @@ relations.update(add_reflexive_edges(worlds, relations))
 relations.update(add_symmetric_edges(relations))
 
 
-# In[137]:
+# In[144]:
 
 
 # Set up the game state
@@ -96,6 +96,9 @@ while liberal_wins < 5 and fascist_wins < 5:
     president = (president + 1) % n_players
     if is_liberal(president):
         chancellor = choice(list(range(president)) + list(range(president + 1, n_players)))
+    else:
+        # Potential issue: this crashes if there is only 1 fascist in the game
+        chancellor = choice(list(range(president)) + list(range(president + 1, n_fascists)))
     votes_for = randrange(0, n_players - n_fascists) + (n_fascists if is_fascist(chancellor) else 0)
     if votes_for >= vote_threshold:
         if is_liberal(president) and is_liberal(chancellor):
@@ -104,4 +107,10 @@ while liberal_wins < 5 and fascist_wins < 5:
             fascist_wins += 1
 
 print('The liberals win!' if liberal_wins >= 5 else 'The fascists win!')
+
+
+# In[ ]:
+
+
+
 
