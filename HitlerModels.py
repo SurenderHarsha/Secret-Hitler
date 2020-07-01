@@ -108,7 +108,7 @@ class Zero_Order(object):
                 self.game_state ="Voting"
                 time.sleep(1)
                 
-            votes_for = randrange(0, self.n_players - self.n_fascists) + (self.n_fascists if self.is_fascist(self.chancellor) else 0)
+            votes_for = randrange(0, self.n_players - self.n_fascists + 1) + (self.n_fascists if self.is_fascist(self.chancellor) else 0)
             if votes_for >= vote_threshold:
                 if self.is_liberal(self.president) and self.is_liberal(self.chancellor):
                     self.liberal_wins += 1
