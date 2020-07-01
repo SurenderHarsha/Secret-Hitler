@@ -5,7 +5,7 @@
 import mlsolver
 from mlsolver.kripke import World, KripkeStructure
 from itertools import combinations
-from random import randrange, choice
+from random import randrange, choice, sample
 import threading
 import time
 
@@ -19,7 +19,7 @@ fascist_dist = {
 
 
 class Zero_Order(object):
-    def __init__(self,n_players,simulation = True):
+    def __init__(self, n_players, simulation = True):
         self.n_players = n_players
         self.n_fascists = fascist_dist[self.n_players]
         self.fascist_wins_needed = 5
@@ -32,6 +32,7 @@ class Zero_Order(object):
         self.winner = 0
         self.done = False
         self.simulation = simulation
+        self.votes = { n: False for n in range(n_players) }
         combination_numbers = combinations(range(self.n_players), self.n_fascists)
         self.possible_combinations = []
         for combo in combination_numbers:
@@ -40,7 +41,6 @@ class Zero_Order(object):
             
         self.worlds = [World("{}".format(idx), { atom: True for atom in atoms}) for idx, atoms in enumerate(self.possible_combinations)]
         self.n_worlds = len(self.worlds)
-        
         
         self.relations = {
         # Just the liberal relations
@@ -53,16 +53,17 @@ class Zero_Order(object):
         
         self.relations.update(self.add_reflexive_edges(self.worlds, self.relations))
         self.relations.update(self.add_symmetric_edges(self.relations))
-        
+
+        self.fascists = sample(list(range(self.n_players)), self.n_fascists)
         
         t1 = threading.Thread(target=self.run_game)
         t1.start()
             
     def is_fascist(self,player_number):
-        return player_number < self.n_fascists
+        return player_number in self.fascists
 
     def is_liberal(self,player_number):
-        return player_number >= self.n_fascists
+        return not self.is_fascist(player_number)
     
     def add_reflexive_edges(self,worlds, relations):
         result = {}
@@ -93,6 +94,7 @@ class Zero_Order(object):
         self.president = randrange(0, self.n_players)
         if self.simulation:
             print("Game Running")
+        
         while self.liberal_wins < self.liberal_wins_needed and self.fascist_wins < self.fascist_wins_needed:
             self.game_state = "Choosing Government"
             if self.simulation:
@@ -105,9 +107,23 @@ class Zero_Order(object):
                 self.chancellor = choice(list(range(self.president)) + list(range(self.president + 1, self.n_fascists)))
             if self.simulation:
                 time.sleep(1.5)
-                self.game_state ="Voting"
+                self.game_state = "Voting"
                 time.sleep(1)
-                
+            
+            votes_for = 0
+            for player in range(self.n_players):
+                if player == self.president or player == self.chancellor:
+                    self.votes[player] = True
+                    votes_for += 1
+                elif self.is_liberal(player):
+                    vote = choice([True, False])
+                    self.votes[player] = vote
+                    votes_for += 1 if vote else 0
+                else:
+                    vote = self.is_fascist(self.president) or self.is_fascist(self.chancellor)
+                    self.votes[player] = vote
+                    votes_for += 1 if vote else 0
+            
             votes_for = randrange(0, self.n_players - self.n_fascists + 1) + (self.n_fascists if self.is_fascist(self.chancellor) else 0)
             if votes_for >= vote_threshold:
                 if self.is_liberal(self.president) and self.is_liberal(self.chancellor):
@@ -131,17 +147,16 @@ class Zero_Order(object):
         
         
 class First_Order(object):
-    
     def __init__(self,n_players):
         self.n_players = n_players
         self.n_fascists = fascist_dist[self.n_players]
         self.fascist_wins_needed = 5
         self.liberal_wins_needed = 5
-        self.president=0
-        self.chancellor=0
-        self.liberal_wins=0
-        self.fascist_wins=0
-        self.game_state='Start'
+        self.president = 0
+        self.chancellor = 0
+        self.liberal_wins = 0
+        self.fascist_wins = 0
+        self.game_state = 'Start'
         
         combination_numbers = combinations(range(self.n_players), self.n_fascists)
         self.possible_combinations = []
@@ -152,9 +167,8 @@ class First_Order(object):
         self.worlds = [World("{}".format(idx), { atom: True for atom in atoms}) for idx, atoms in enumerate(self.possible_combinations)]
         self.n_worlds = len(self.worlds)
         
-        
         self.relations = {
-        # Just the liberal relations
+            # Just the liberal relations
             n: [(str(x), str(y)) for x, y in list(combinations((range(self.n_worlds)), 2))] for n in range(self.n_fascists, self.n_players)
         }
         
@@ -165,15 +179,16 @@ class First_Order(object):
         self.relations.update(self.add_reflexive_edges(self.worlds, self.relations))
         self.relations.update(self.add_symmetric_edges(self.relations))
         
-        
-        t1 = threading.Thread(target=self.run_game)
-        t1.start()
+        self.fascists = sample(list(range(self.n_players)), self.n_fascists)
+
+        # t1 = threading.Thread(target=self.run_game)
+        # t1.start()
             
     def is_fascist(self,player_number):
-        return player_number < self.n_fascists
+        return player_number in self.fascists
 
     def is_liberal(self,player_number):
-        return player_number >= self.n_fascists
+        return not self.is_fascist(player_number)
     
     def add_reflexive_edges(self,worlds, relations):
         result = {}
@@ -194,5 +209,38 @@ class First_Order(object):
             result[agent] = result_agents
         return result
     
-    
-    
+    def run_game(self):
+        self.liberal_wins = 0
+        self.fascist_wins = 0
+        vote_threshold = self.n_players // 2 + 1
+        self.chancellor = -1
+        self.president = randrange(0, self.n_players)
+
+        while self.liberal_wins < self.liberal_wins_needed and self.fascist_wins < self.fascist_wins_needed:
+            self.game_state = "Choosing Government"
+            self.president = (self.president + 1) % self.n_players
+            if self.is_liberal(self.president):
+                pass
+            else:
+                # Potential issue: this crashes if there is only 1 fascist in the game
+                pass
+                
+            votes_for = randrange(0, self.n_players - self.n_fascists + 1) + (self.n_fascists if self.is_fascist(self.chancellor) else 0)
+            if votes_for >= vote_threshold:
+                if self.is_liberal(self.president) and self.is_liberal(self.chancellor):
+                    self.liberal_wins += 1
+                else:
+                    self.fascist_wins += 1
+        
+        if self.liberal_wins >= 5:
+            self.winner = 0
+        else:
+            self.winner = 1
+        print('The liberals win!' if self.liberal_wins >= 5 else 'The fascists win!')
+        self.done = True
+
+if __name__ == '__main__':
+    print('NOTE: this runs the model without the UI')
+    game = First_Order(5)
+    game.run_game()
+    print('Finished running...')
