@@ -42,9 +42,13 @@ For first order simulation, after the kripke models have been generated, the sim
 #### Demo
 
 <img src="img/demo_1.PNG" width="300" height="300">
+
+
 A typical game screen looks like the image given above, where the blue circles are liberals while the red circles are fascists. *P* denotes the current president and *C* denotes the current Chancellor. The liberal and fascist scores show how many of each party policies have been passed till that point.
 In the voting phase, the votes are anonymous and the players do not know of each other's votes, but the vote of each player is shown in the UI for the user to have a better understanding.
-<img src="img/demo_2.PNG" width="250" height="250">
+
+
+<img src="img/demo_2.PNG" width="300" height="300">
 
 ### Epistemic Model
 We assume and model the players to play optimally to reduce complication, the game is straight-forward and we attempt to gradually add increasing layers of complexity like strategies.
