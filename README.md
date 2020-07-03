@@ -38,7 +38,7 @@ In the menu screen, the number of players can be entered by pressing the numbers
 For zero order simulation, the simulation runs and ends, since there are no model updates, the simulation cannot be paused or inspected, it shows one single flow of the game.
 
 For first order simulation, after the kripke models have been generated, the simulation can be paused anytime by pressing **SPACEBAR** on the keyboard, you will see a message on the console confirming if the game is paused. While the game is paused, you can inspect each agent's knowledge about the other players by hovering the mouse over their body. Pressing **SPACEBAR** again resumes the game with a confirmation message in console. The game runs in a single flow and ends with either party victory.
-(Warning: when starting with 6 players for first order simulation, it may take a few seconds to generate the kripke model).
+(Warning: when starting with 6 players for first order simulation, it may take a few seconds to generate the kripke model, the screen may also not be very responsive if pausing doesnt work, try pressing spacebar again until you receive the console message).
 
 #### Demo
 <p align="center">
