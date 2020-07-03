@@ -42,7 +42,7 @@ For first order simulation, after the kripke models have been generated, the sim
 #### Demo
 ![demo_1](img/demo_1.PNG =250x250)
 
-
+<img src="img/demo_1.PNG" width="100" height="100">
 
 
 ### Epistemic Model
