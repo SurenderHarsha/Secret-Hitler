@@ -61,7 +61,7 @@ When the game is paused, users can hover their mouse over a player circle which 
 As shown, we hover the mouse over a fascist player, who knows who the fascists are and who the liberals are(liberals are represented by blue birds and fascists by red skulls).
 
 #### A knowledge run through the interface
-Here we will show how knowledge changes throughout a game and how each player discovers the other player's true role. Fascists already know their roles which implies they already know who the liberals are. The main updates to the model are done with public announcements and the liberals trying to discover who the fascists are.
+Here we will show how knowledge changes throughout a game(First Order knowledge) and how each player discovers the other player's true role. Fascists already know their roles which implies they already know who the liberals are. The main updates to the model are done with public announcements and the liberals trying to discover who the fascists are.
 
 **Step One**
 <p align="center">
@@ -85,8 +85,31 @@ All liberals still assume the other players are liberals except the previous pre
 <p align="center">
 <img src="img/demo_7.png" width="300" height="300">
 </p>
-A fascist poli
+A fascist policy has been passed again, since the president is a fascist, this sends out a public announcement again that either the current president or chancellor is a fascist. Since the current chancellor knows he is a liberal, he knows that the current president must be a fascist from this update. The two liberals in the top now know that the player on the right side is a fascist. 
 
+**Step Five**
+<p align="center">
+<img src="img/demo_8.png" width="300" height="300">
+</p>
+With the next president and chancellor being liberls, a liberal policy has been passed, this sends out a public announcement which updates the kripke model that both the president *and* the chancellor are liberals. Only one fascist has been discovered by two players, and there are already two confirmed liberals, this confirmation reduces the models and removes worlds in which those two players are fascists thus eliminating possibilities. The game proceeds.
+
+**Step Six**
+<p align="center">
+<img src="img/demo_9.png" width="300" height="300">
+</p>
+The president is a fascist again and a fascist policy has been passed, the chancellor now knows that the president is a fascist. The game continues until all the liberalists have been president atleast once
+
+**Step Seven**
+<p align="center">
+<img src="img/demo_11.png" width="300" height="300">
+</p>
+Since 4 liberal policies have already been passed, all liberal players now know who all the other liberal players are, what happens when a fascist now becomes a president?
+<p align="center">
+<img src="img/demo_12.png" width="300" height="300">
+</p>
+The liberals do not vote for the government, even when the chancellor is liberal, the government fails to come into power and the power of the president is passed on.
+The liberal president also now prioritizes in choosing a liberal chancellor since now the president knows who all the liberals are.
+Thus the liberals win this game by elimination and usage of knowledge.
 
 ### Epistemic Model
 We assume and model the players to play optimally to reduce complication, the game is straight-forward and we attempt to gradually add increasing layers of complexity like strategies.
