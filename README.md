@@ -63,43 +63,43 @@ As shown, we hover the mouse over a fascist player, who knows who the fascists a
 #### A knowledge run through the interface
 Here we will show how knowledge changes throughout a game(First Order knowledge) and how each player discovers the other player's true role. Fascists already know their roles which implies they already know who the liberals are. The main updates to the model are done with public announcements and the liberals trying to discover who the fascists are.
 
-1. **Step One**
+* **Step One**
 <p align="center">
 <img src="img/demo_4.png" width="300" height="300">
 </p>
 In the beginning, a liberalist assumes that all the other players are liberals because there is no sufficient *evidence*(knowledge) against any other player being a fascist.
 
-2. **Step Two**
+* **Step Two**
 <p align="center">
 <img src="img/demo_5.png" width="300" height="300">
 </p>
 A fascist policy has been passed since the president is a liberal and a chancellor is a fascist(see table above). Thus, a public announcement is made that either the president is a fascist *or* the chancellor is a fascist and the kripke models are updated.
 
-3. **Step Three**
+* **Step Three**
 <p align="center">
 <img src="img/demo_6.png" width="300" height="300">
 </p>
 All liberals still assume the other players are liberals except the previous president, since the previous president was a liberal and a fascist policy has been passed, his relations in the kripke model conclude that the previous chancellor was a fascist.
 
-4. **Step Four**
+* **Step Four**
 <p align="center">
 <img src="img/demo_7.png" width="300" height="300">
 </p>
 A fascist policy has been passed again, since the president is a fascist, this sends out a public announcement again that either the current president or chancellor is a fascist. Since the current chancellor knows he is a liberal, he knows that the current president must be a fascist from this update. The two liberals in the top now know that the player on the right side is a fascist. 
 
-5. **Step Five**
+* **Step Five**
 <p align="center">
 <img src="img/demo_8.png" width="300" height="300">
 </p>
 With the next president and chancellor being liberls, a liberal policy has been passed, this sends out a public announcement which updates the kripke model that both the president *and* the chancellor are liberals. Only one fascist has been discovered by two players, and there are already two confirmed liberals, this confirmation reduces the models and removes worlds in which those two players are fascists thus eliminating possibilities. The game proceeds.
 
-6. **Step Six**
+* **Step Six**
 <p align="center">
 <img src="img/demo_9.png" width="300" height="300">
 </p>
 The president is a fascist again and a fascist policy has been passed, the chancellor now knows that the president is a fascist. The game continues until all the liberalists have been president atleast once
 
-7. **Step Seven**
+* **Step Seven**
 <p align="center">
 <img src="img/demo_11.png" width="300" height="300">
 </p>
