@@ -185,8 +185,29 @@ After just two passed policies, the two liberal agents were able to figure out w
 
 
 ## Results
-Coming Soon..
+Simulations have been run without the UI, which enables us to run games faster.
+We have divided the results into different experiments to see how each faction performs in different orders and different settings.
 
+### Experiments
+Each experiment consists of a 1000 simulations of games and its results.
+#### Zero order
+The Zero order experiments have been run from 5 player games to 9 player games and we have plotted out a bar diagram to compare the scores(policies passed in all games combined) of both the factions.
 
+<p align="center">
+<img src="img/zero_order.png" width="300" height="300">
+</p>
+
+The fascists score outweights the liberals score by a large margin, this is most likely due to how easy it is for fascists to score. The only time a liberal policy is passed(scored) is when both the president and chancellor are voted into power and they are both liberals. Thus, liberals scoring is a game of chance. Also we notice the trend where the liberal score decreases as the number of players increase, this is due to the addition of more liberals increasing more randomness and the addition of more fascists increases the fascists chances of winning.
+Since zero order simulation is based on randomness, we decided any other settings would not provide any more insights.
+
+#### First order
+Due to the speed of generating and solving kripke models(first order requires reducing kripke models based on initial information), 1000 simulations cannot be run for more than 5 players which is why the experiment has been limited to only 5 players.
+
+<p align="center">
+<img src="img/f_o_score.png" width="200" height="200">
+<img src="img/f_o_partial_score.png" width="300" height="200">
+</p>
+
+hello
 ## Discussion
 Coming Soon...
