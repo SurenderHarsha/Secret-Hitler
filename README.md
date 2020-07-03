@@ -30,7 +30,17 @@ The multi-agent simulation's progression through a game is round-based. Agents a
 ### The Interface
 The GUI is made using Pygame's native library found [here](https://www.pygame.org/news). We take the help of Mlsolver package to create and solve Kripke Models which can be found [here](https://github.com/erohkohl/mlsolver).
 
-The game consists of two modes -  Zero order and First Order. Since models do not need to be updated in zero order simulation, there can be 5-9 players in it, whereas the first order simulation can support only 5-6 players max. In the menu screen, the number of players can be entered by pressing the numbers 5-9 on the keyboard and then clicking on either zero order or first order to start the simulation.
+The game consists of two modes -  Zero order and First Order. Since models do not need to be updated in zero order simulation, there can be 5-9 players in it, whereas the first order simulation can support only 5-6 players max.
+
+#### Usage
+In the menu screen, the number of players can be entered by pressing the numbers 5-9 on the keyboard and then clicking on either zero order or first order to start the simulation. (Warning: First order can support only a max of 6 players, anymore and the simulation will stop responding).
+
+For zero order simulation, the simulation runs and ends, since there are no model updates, the simulation cannot be paused or inspected, it shows one single flow of the game.
+
+For first order simulation, after the kripke models have been generated, the simulation can be paused anytime by pressing **SPACEBAR** on the keyboard, you will see a message on the console confirming if the game is paused. While the game is paused, you can inspect each agent's knowledge about the other players by hovering the mouse over their body. Pressing **SPACEBAR** again resumes the game with a confirmation message in console. The game runs in a single flow and ends with either party victory.
+
+#### Demo
+
 
 
 
