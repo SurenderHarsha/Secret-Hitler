@@ -65,7 +65,7 @@ Here we will show how knowledge changes throughout a game and how each player di
 
 **Step One**
 <p align="center">
-<img src="img/demo_3.png" width="300" height="300">
+<img src="img/demo_4.png" width="300" height="300">
 </p>
 In the beginning, a liberalist assumes that all the other players are liberals because there is no sufficient *evidence*(knowledge) against any other player being a fascist.
 
