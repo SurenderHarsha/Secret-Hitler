@@ -68,6 +68,7 @@ The game consists of two modes -  Zero order and First Order. Since models do no
 Run the script in the console using:
 
 if python3 is the only python on the system: `python HitlerUI.py`
+
 if python2 and python3 are on the system: `python3 HitlerUI.py`
 
 Make sure to run requirements.txt before running the script to install all necessary packages(Pygame and numpy). The package Mlsolver is already included in the repo as it is not an official pip package. 
@@ -210,3 +211,8 @@ From the first chart, we can infer that liberals have an edge, as shown in the k
 In summary: we have implemented a system that simulates Secret Hitler at the 0th and 1st order. Model explosion means that for higher player counts, the simulation takes too long to run the logic. Even so, we can make some inferences about the balance of the game.
 
 If the system were to be expanded, higher-order simulations would be the first step. In these simulations, fascists could try to fool liberals, and liberals could reason about fascists possibly fooling them. These more complex strategies could yield some interesting results. However, they also greatly increase the complexity of the simulation.
+They can be benificial to solving the game(balancing out the power of fascists and liberals). We have noticed that zero order and first order mimic some real life players: zero order being players who haven't read the rules of the game and first order being players who have read the rules of the game but are not using any tactics to win.
+
+Updating and reducing kripke models and storage of kripke models is computationally expensive and therefore simulations have a limited number of players.
+
+
