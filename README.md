@@ -93,7 +93,7 @@ In the voting phase, the votes are anonymous and the players do not know of each
 <img src="img/demo_2.PNG" width="300" height="300">
 </p>
 
-When the game is paused, users can hover their mouse over a player circle which will get highlighted by a yellow circle, which will they show the knowledge of that player about the other players in the game. It is checked with the kripke model using Mlsolver.
+When the game is paused, users can hover their mouse over a player circle which will get highlighted by a yellow circle, which will then show the knowledge of that player about the other players in the game. It is checked with the kripke model using Mlsolver.
 
 <p align="center">
 <img src="img/demo_3.png" width="300" height="300">
