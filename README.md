@@ -132,7 +132,7 @@ A fascist policy has been passed again, since the president is a fascist, this s
 <p align="center">
 <img src="img/demo_8.png" width="300" height="300">
 </p>
-With the next president and chancellor being liberls, a liberal policy has been passed, this sends out a public announcement which updates the kripke model that both the president *and* the chancellor are liberals. Only one fascist has been discovered by two players, and there are already two confirmed liberals, this confirmation reduces the models and removes worlds in which those two players are fascists thus eliminating possibilities. The game proceeds.
+With the next president and chancellor being liberals, a liberal policy has been passed, this sends out a public announcement which updates the kripke model that both the president *and* the chancellor are liberals. Only one fascist has been discovered by two players, and there are already two confirmed liberals, this confirmation reduces the models and removes worlds in which those two players are fascists thus eliminating possibilities. The game proceeds.
 
 * **Step Six**
 <p align="center">
