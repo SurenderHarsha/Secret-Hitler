@@ -22,18 +22,19 @@ fascist_dist = {
 
 
 class Zero_Order(object):
-    def __init__(self, n_players, simulation = True):
+    def __init__(self, n_players, simulation = True,n_f_wins = 5,n_l_wins = 5):
         self.n_players = n_players
         self.n_fascists = fascist_dist[self.n_players]
-        self.fascist_wins_needed = 5
-        self.liberal_wins_needed = 5
-        self.president=0
-        self.chancellor=0
+        self.fascist_wins_needed = n_f_wins
+        self.liberal_wins_needed = n_l_wins
+        self.president=-1
+        self.chancellor=-1
         self.liberal_wins=0
         self.fascist_wins=0
         self.game_state='Start'
         self.winner = 0
         self.done = False
+        self.lock = 0
         self.simulation = simulation
         self.votes = { n: False for n in range(n_players) }
         combination_numbers = combinations(range(self.n_players), self.n_fascists)
@@ -89,7 +90,7 @@ class Zero_Order(object):
     
     def run_game(self):
         if self.simulation:
-            time.sleep(4)
+            time.sleep(2)
         self.liberal_wins = 0
         self.fascist_wins = 0
         vote_threshold = self.n_players // 2 + 1
@@ -99,22 +100,35 @@ class Zero_Order(object):
             print("Game Running")
         
         while self.liberal_wins < self.liberal_wins_needed and self.fascist_wins < self.fascist_wins_needed:
-            self.game_state = "Choosing Government"
+            while self.lock:
+                continue
+            self.game_state = "Selecting President"
             if self.simulation:
-                time.sleep(1)
+                time.sleep(2.5)
             self.president = (self.president + 1) % self.n_players
+            
+            self.game_state = "Selecting Chancellor"
+            
+            if self.simulation:
+                time.sleep(2.5)
             if self.is_liberal(self.president):
                 self.chancellor = choice(list(range(self.president)) + list(range(self.president + 1, self.n_players)))
             else:
                 # Potential issue: this crashes if there is only 1 fascist in the game
                 self.chancellor = choice(list(range(self.president)) + list(range(self.president + 1, self.n_fascists)))
+            self.votes = { n: False for n in range(self.n_players) } 
             if self.simulation:
-                time.sleep(1.5)
+                time.sleep(2.5)
                 self.game_state = "Voting"
-                time.sleep(1)
-            
+                time.sleep(2.5)
+            while self.lock:
+                continue
             votes_for = 0
             for player in range(self.n_players):
+                while self.lock:
+                    continue
+                if self.simulation:
+                    time.sleep(0.5)
                 if player == self.president or player == self.chancellor:
                     self.votes[player] = True
                     votes_for += 1
@@ -126,21 +140,40 @@ class Zero_Order(object):
                     vote = self.is_fascist(self.president) or self.is_fascist(self.chancellor)
                     self.votes[player] = vote
                     votes_for += 1 if vote else 0
-            
-            votes_for = randrange(0, self.n_players - self.n_fascists + 1) + (self.n_fascists if self.is_fascist(self.chancellor) else 0)
+            if self.simulation:
+                time.sleep(2)
+            while self.lock:
+                continue
+            #votes_for = randrange(0, self.n_players - self.n_fascists + 1) + (self.n_fascists if self.is_fascist(self.chancellor) else 0)
             if votes_for >= vote_threshold:
+                self.game_state = "Government wins by "+str(votes_for-(self.n_players-votes_for))+" votes"
+                if self.simulation:
+                    time.sleep(3.5)
                 if self.is_liberal(self.president) and self.is_liberal(self.chancellor):
+                    while self.lock:
+                        continue
                     self.liberal_wins += 1
+                    self.game_state = "Liberal policy passed"
                 else:
                     self.fascist_wins += 1
+                    self.game_state = "Fascist Policy passed"
+            else:
+                if self.simulation:
+                    self.game_state = "Vote Failed"
+                    time.sleep(1.5)
+                    self.game_state = "Choose new Government"
             if self.simulation:
-                time.sleep(1.5)
+                time.sleep(3.5)
+            self.chancellor = -1
         if self.liberal_wins>=5:
+            self.game_state = "Liberals Win"
             self.winner = 0
         else:
+            self.game_state = "Fascists Win"
             self.winner = 1
         if self.simulation:
             print('The liberals win!' if self.liberal_wins >= 5 else 'The fascists win!')
+            time.sleep(2)
         self.done = True
     def communicate(self):
         #Pass on game state here to UI
@@ -150,18 +183,21 @@ class Zero_Order(object):
         
         
 class First_Order(object):
-    def __init__(self,n_players):
+    def __init__(self,n_players,simulation = True,n_f_wins = 5,n_l_wins = 5):
         self.n_players = n_players
         self.n_fascists = fascist_dist[self.n_players]
         self.fascists = sample(list(range(self.n_players)), self.n_fascists)
-        self.fascist_wins_needed = 5
-        self.liberal_wins_needed = 5
+        self.fascist_wins_needed = n_f_wins
+        self.liberal_wins_needed = n_l_wins
         self.president = 0
         self.chancellor = 0
         self.liberal_wins = 0
         self.fascist_wins = 0
         self.game_state = 'Start'
+        self.simulation = simulation
         self.votes = { n: False for n in range(n_players) }
+        self.done=False
+        self.lock = 0
         combination_numbers = combinations(range(self.n_players), self.n_fascists)
         self.possible_combinations = []
         for combo in combination_numbers:
@@ -185,9 +221,15 @@ class First_Order(object):
             atom = Atom('{}=fascist'.format(player)) if self.is_fascist(player) else Atom('{}=liberal'.format(player))
             model = model.solve(atom)
             self.models.append(model)
-
-        # t1 = threading.Thread(target=self.run_game)
-        # t1.start()
+        for player in range(self.n_players):
+            if self.is_fascist(player):
+                for p in range(self.n_players):
+                    if self.is_liberal(p):
+                        a = Atom('{}=liberal'.format(p))
+                        self.models[player] = self.models[player].solve(a)
+        
+        t1 = threading.Thread(target=self.run_game)
+        t1.start()
             
     def is_fascist(self,player_number):
         return player_number in self.fascists
@@ -211,15 +253,29 @@ class First_Order(object):
     def run_game(self):
         self.liberal_wins = 0
         self.fascist_wins = 0
+        self.game_state = "Starting.."
+        if self.simulation:
+                time.sleep(2.5)
         vote_threshold = self.n_players // 2 + 1
         self.chancellor = -1
         self.president = randrange(0, self.n_players)
 
         while self.liberal_wins < self.liberal_wins_needed and self.fascist_wins < self.fascist_wins_needed:
-            self.game_state = "Choosing Government"
-            self.president = (self.president + 1) % self.n_players
             
+            self.game_state = "Selecting President"
+            if self.simulation:
+                time.sleep(2.5)
+            while self.lock:
+                continue
+            self.president = (self.president + 1) % self.n_players
+            if self.simulation:
+                time.sleep(2.5)
+            self.game_state = "Selecting Chancellor"
+            if self.simulation:
+                time.sleep(2.5)
             # Choosing a chancellor
+            while self.lock:
+                continue
             if self.is_fascist(self.president):
                 self.chancellor = choice(list(range(self.president)) + list(range(self.president + 1, self.n_players)))
             else:
@@ -227,13 +283,27 @@ class First_Order(object):
                 # Choose the 'most liberal' candidate
                 counts = []
                 for player in range(self.n_players):
+                    while self.lock:
+                        continue
                     counts.append(sum(map(lambda w: 1 if w.assignment.get('{}=liberal'.format(player), False) else 0, model.worlds)))
                 counts[self.president] = -1
                 self.chancellor = np.argmax(counts)
-
+            if self.simulation:
+                time.sleep(2.5)
+            while self.lock:
+                continue
+            self.votes = { n: False for n in range(self.n_players) }
+            self.game_state = "Voting"
+            if self.simulation:
+                time.sleep(2.5)
             # Voting on the government
             votes_for = 0
             for player in range(self.n_players):
+                if self.simulation:
+                    time.sleep(0.5)
+                while self.lock:
+                    continue
+                
                 if player == self.president or (player == self.chancellor and self.is_fascist(player)):
                     self.votes[player] = True
                     votes_for += 1
@@ -247,17 +317,36 @@ class First_Order(object):
                     vote = self.is_fascist(self.president) or self.is_fascist(self.chancellor)
                     self.votes[player] = vote
                     votes_for += 1 if vote else 0
-
+                    
+            if self.simulation:
+                time.sleep(2.5)
+            while self.lock:
+                    continue
             # The government chooses a policy
             # and the kripke models are updated
             # based on the policy chosen
             if votes_for >= vote_threshold:
+                self.game_state = "Government wins!"
+                if self.simulation:
+                    time.sleep(2.5)
+                while self.lock:
+                    continue
                 if self.is_liberal(self.president) and self.is_liberal(self.chancellor):
+                    self.game_state = "Liberal Policy Passed"
+                    if self.simulation:
+                        time.sleep(2.5)
+                    while self.lock:
+                        continue
                     self.liberal_wins += 1
                     updater = Box(And(Atom('{}=liberal'.format(self.president)), Atom('{}=liberal'.format(self.chancellor))))
                     for n in range(self.n_players):
                         self.models[n] = self.models[n].solve(updater)
                 else:
+                    self.game_state = "Fascist Policy Passed"
+                    if self.simulation:
+                        time.sleep(2.5)
+                    while self.lock:
+                        continue
                     self.fascist_wins += 1
                     updater = Box(Or(Atom('{}=fascist'.format(self.president)), Atom('{}=fascist'.format(self.chancellor))))
                     for n in range(self.n_players):
@@ -268,16 +357,22 @@ class First_Order(object):
                     if self.is_liberal(self.chancellor):
                         self.models[self.chancellor] = self.models[self.chancellor].solve(Atom('{}=fascist'.format(self.president)))
                     
-        
+            if self.simulation:
+                time.sleep(2.5)
+            while self.lock:
+                    continue
         if self.liberal_wins >= 5:
+            self.game_state = "Liberals Win"
             self.winner = 0
         else:
+            self.game_state = "Fascists Win"
             self.winner = 1
-        print('The liberals win!' if self.liberal_wins >= 5 else 'The fascists win!')
+        #print('The liberals win!' if self.liberal_wins >= 5 else 'The fascists win!')
         self.done = True
-
+        
+        
 if __name__ == '__main__':
     print('NOTE: this runs the model without the UI')
     game = First_Order(5)
-    game.run_game()
+    #game.run_game()
     print('Finished running...')
