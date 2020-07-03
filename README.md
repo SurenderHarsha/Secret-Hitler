@@ -69,6 +69,19 @@ Here we will show how knowledge changes throughout a game and how each player di
 </p>
 In the beginning, a liberalist assumes that all the other players are liberals because there is no sufficient *evidence*(knowledge) against any other player being a fascist.
 
+**Step Two**
+<p align="center">
+<img src="img/demo_5.png" width="300" height="300">
+</p>
+A fascist policy has been passed since the president is a liberal and a chancellor is a fascist(see table above). Thus, a public announcement is made that either the president is a fascist *or* the chancellor is a fascist and the kripke models are updated.
+
+**Step Three**
+<p align="center">
+<img src="img/demo_6.png" width="300" height="300">
+</p>
+All liberals still assume the other players are liberals except the previous president, since the previous president was a liberal and a fascist policy has been passed, his relations in the kripke model conclude that the previous chancellor was a fascist.
+
+
 
 ### Epistemic Model
 We assume and model the players to play optimally to reduce complication, the game is straight-forward and we attempt to gradually add increasing layers of complexity like strategies.
