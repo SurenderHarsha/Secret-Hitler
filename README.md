@@ -205,9 +205,11 @@ Due to the speed of generating and solving kripke models(first order requires re
 
 <p align="center">
 <img src="img/f_o_score.png" width="200" height="200">
-<img src="img/f_o_partial_score.png" width="300" height="200">
+<img src="img/f_o_partial_score.png" width="200" height="200">
 </p>
 
-hello
+From the first chart, we can infer that liberals have an edge, as shown in the knowledge run in the program interface above, the fascists start scoring the beginning as everyone's role is hidden. But due to elimination and deduction(knowledge updates and public announcements) the liberals soon discover the fascists and make a perfect score, which explains why the fascists have a decent enough score than compared to liberals in zero order. In the original game, the liberals win if 5 liberal policies have been passed and the fascists win if 6 fascist policies have been passed,but in our case the fascists do not try to fool the liberalists since it is first order, therefore we decided to reduce the fascists policy required to 3, whose results are shown in the First order partial score chart. The fascists perfomance has improved, but their winrate still remains the same. We assume that upon increasing the number of players, the fascists are more difficult to get discovered completely which may give them a chance.
+
+We also assume that higher order simulations can model a realistic game where the fascists try to fool the liberalists thus creating a more balanced game.
 ## Discussion
 Coming Soon...
