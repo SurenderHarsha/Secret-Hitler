@@ -155,7 +155,7 @@ Thus the liberals win this game by elimination and usage of knowledge.
 
 
 ## Kripke model
-There are several actions that can alter the Kripke model, so here we will formally show the effect of those actions on the game states. In this example we will use a first-order simulation with three agents A, B and C. Agents will believe another agent is fascist or liberal after just one passed policy, in order to simplify. In the simulation agents will only start to draw conclusions about the other agents' factions after multiple passed policies. Please note that reflexive relations are not drawn to minimiza clutter in the graphs.
+There are several actions that can alter the Kripke model, so here we will formally show the effect of those actions on the game states. In this example we will use a first-order simulation with three agents A, B and C. Agents will know another agent is fascist or liberal after just one passed policy, in order to simplify. In the simulation agents will only start to draw conclusions about the other agents' factions after multiple passed policies. Please note that reflexive relations are not drawn to minimize clutter in the graphs.
 
 When worlds are no longer accesible by any agent, they will be removed. In theory, a simulation with 3 agents would result in 2^3=8 worlds. However, not all of these worlds are possible. It is impossible for the agent set to be fully liberal or fully fascist, so these worlds are excluded. The world that is the exact opposite of the ground truth is also not held possible for any agent and removed.
 
