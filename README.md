@@ -61,6 +61,13 @@ When the game is paused, users can hover their mouse over a player circle which 
 As shown, we hover the mouse over a fascist player, who knows who the fascists are and who the liberals are(liberals are represented by blue birds and fascists by red skulls).
 
 #### A knowledge run through the interface
+Here we will show how knowledge changes throughout a game and how each player discovers the other player's true role. Fascists already know their roles which implies they already know who the liberals are. The main updates to the model are done with public announcements and the liberals trying to discover who the fascists are.
+
+**Step One**
+<p align="center">
+<img src="img/demo_3.png" width="300" height="300">
+</p>
+In the beginning, a liberalist assumes that all the other players are liberals because there is no sufficient *evidence*(knowledge) against any other player being a fascist.
 
 
 ### Epistemic Model
