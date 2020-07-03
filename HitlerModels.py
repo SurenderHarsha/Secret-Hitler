@@ -62,7 +62,7 @@ class Zero_Order(object):
         
         t1 = threading.Thread(target=self.run_game)
         t1.start()
-            
+    
     def is_fascist(self,player_number):
         return player_number in self.fascists
 
@@ -198,6 +198,29 @@ class First_Order(object):
         self.votes = { n: False for n in range(n_players) }
         self.done=False
         self.lock = 0
+        t2 = threading.Thread(target = self.preprocess)
+        t2.start()
+            
+    def is_fascist(self,player_number):
+        return player_number in self.fascists
+
+    def is_liberal(self,player_number):
+        return not self.is_fascist(player_number)
+    
+    def add_reflexive_edges(self, worlds, relations):
+        result = set()
+        for world in worlds:
+            result.add((world.name, world.name))
+        return result
+    
+    def add_symmetric_edges(self,relations):
+        result = set()
+        for r in relations:
+            x, y = r[1], r[0]
+            result.add((x, y))
+        return result
+    
+    def preprocess(self):
         combination_numbers = combinations(range(self.n_players), self.n_fascists)
         self.possible_combinations = []
         for combo in combination_numbers:
@@ -230,26 +253,6 @@ class First_Order(object):
         
         t1 = threading.Thread(target=self.run_game)
         t1.start()
-            
-    def is_fascist(self,player_number):
-        return player_number in self.fascists
-
-    def is_liberal(self,player_number):
-        return not self.is_fascist(player_number)
-    
-    def add_reflexive_edges(self, worlds, relations):
-        result = set()
-        for world in worlds:
-            result.add((world.name, world.name))
-        return result
-    
-    def add_symmetric_edges(self,relations):
-        result = set()
-        for r in relations:
-            x, y = r[1], r[0]
-            result.add((x, y))
-        return result
-    
     def run_game(self):
         self.liberal_wins = 0
         self.fascist_wins = 0
@@ -308,8 +311,12 @@ class First_Order(object):
                     self.votes[player] = True
                     votes_for += 1
                 elif self.is_liberal(player):
-                    f = Or(Atom('{}=fascist'.format(self.president)), Atom('{}=fascist'.format(self.chancellor)))
-                    one_is_fascist = copy.deepcopy(self.models[player]).solve(f) == self.models[player]
+                    f = Box(Or(Atom('{}=fascist'.format(self.president)), Atom('{}=fascist'.format(self.chancellor))))
+                    a_fascist = self.fascists[0]
+                    real_world = self.models[a_fascist].worlds[0].name
+                    
+                    one_is_fascist = f.semantic(self.models[player],real_world)
+                    #one_is_fascist = copy.deepcopy(self.models[player]).solve(f) == self.models[player]
                     vote = not one_is_fascist
                     self.votes[player] = vote
                     votes_for += 1 if vote else 0
