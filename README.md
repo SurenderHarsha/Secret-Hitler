@@ -40,16 +40,16 @@ For zero order simulation, the simulation runs and ends, since there are no mode
 For first order simulation, after the kripke models have been generated, the simulation can be paused anytime by pressing **SPACEBAR** on the keyboard, you will see a message on the console confirming if the game is paused. While the game is paused, you can inspect each agent's knowledge about the other players by hovering the mouse over their body. Pressing **SPACEBAR** again resumes the game with a confirmation message in console. The game runs in a single flow and ends with either party victory.
 
 #### Demo
-
+<p align="center">
 <img src="img/demo_1.PNG" width="300" height="300">
-
+</p>
 
 A typical game screen looks like the image given above, where the blue circles are liberals while the red circles are fascists. *P* denotes the current president and *C* denotes the current Chancellor. The liberal and fascist scores show how many of each party policies have been passed till that point.
 In the voting phase, the votes are anonymous and the players do not know of each other's votes, but the vote of each player is shown in the UI for the user to have a better understanding.
 
-
+<p align="center">
 <img src="img/demo_2.PNG" width="300" height="300">
-
+</p>
 ### Epistemic Model
 We assume and model the players to play optimally to reduce complication, the game is straight-forward and we attempt to gradually add increasing layers of complexity like strategies.
 #### Model Variables
