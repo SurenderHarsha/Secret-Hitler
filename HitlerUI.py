@@ -2,7 +2,6 @@
 
 
 import pygame as p
-import pandas as pd
 import numpy as np
 import time
 import math
@@ -10,6 +9,11 @@ from HitlerModels import *
 import mlsolver
 from mlsolver.kripke import World, KripkeStructure
 from mlsolver.formula import *
+
+'''
+Global Variables
+'''
+
 
 white = (255, 255, 255) 
 black = (0,0,0)
@@ -22,13 +26,11 @@ grey=(200,200,200)
 
 
 (width, height) = (720, 720)
-fps = 150
+fps = 24
 
 
 
-def text_objects(text, font,color):
-    textSurface = font.render(text, True, color)
-    return textSurface, textSurface.get_rect()
+
 
 
 p.init()
@@ -53,6 +55,12 @@ Second_order = False
 val = 5
 clock = p.time.Clock()
 
+
+#### Helper Functions
+def text_objects(text, font,color):
+    textSurface = font.render(text, True, color)
+    return textSurface, textSurface.get_rect()
+
 def take_input():
     global val
     
@@ -75,6 +83,9 @@ def take_input():
                         
     pass
 
+
+
+#Player class to draw player objects
 class Player_unit():
     def __init__(self,pos,unit_number):
         self.pos = pos
@@ -110,7 +121,7 @@ class Player_unit():
             
             
         
-
+#Game manager that interacts with backend 
 class Game_Manager():
     def __init__(self,n_players,game_object):
         self.game_object = game_object
@@ -147,10 +158,12 @@ class Game_Manager():
                 keys=p.key.get_pressed()
                 
                 if keys[p.K_SPACE]:
-                    print("Coming through")
+                    
                     if self.game_object.lock == 0:
+                        print("Paused")
                         self.game_object.lock = 1
                     else:
+                        print("Resumed")
                         self.game_object.lock = 0
                 
     def detect_circle(self):
@@ -189,13 +202,9 @@ class Game_Manager():
     def draw_score(self):
         largeText = p.font.Font('freesansbold.ttf',20)
         
-        
-        
         TextSurf, TextRect = text_objects(str(self.game_object.liberal_wins), largeText,blue)
         TextRect.center = (275,678)
         screen.blit(TextSurf, TextRect)
-        
-        
         
         TextSurf, TextRect = text_objects(str(self.game_object.fascist_wins), largeText,red)
         TextRect.center = (575,678)
@@ -206,11 +215,7 @@ class Game_Manager():
             
         
         
-             
-        
-    
-    
-
+#Custom Button Class
 class Menu_Button():
     def __init__(self,name,pos,img_name):
         self.name = name
@@ -264,6 +269,7 @@ class Menu_Button():
             return
 
 
+#The main function to run UI
 def run_ui():
     global Flash,clock,MainMenu,Page2,Zero_order,First_order,Second_order
     flash_count = 0
@@ -280,8 +286,6 @@ def run_ui():
             screen.fill(black)
             title = p.image.load('sh_title.png') 
             screen.blit(title,(130,100))
-            
-            
             Start.draw(mouse)
             Exit.draw(mouse)
             p.display.flip()
@@ -292,8 +296,7 @@ def run_ui():
                     p.quit()
                     
     while Page2:
-        #print("Inside Page 2")
-        
+        #print("Inside Page 2")       
         mouse = p.mouse.get_pos()
         clock.tick(fps)
         screen.fill(black)
@@ -308,8 +311,7 @@ def run_ui():
         screen.blit(TextSurf, TextRect)
         z_o.draw(mouse)
         f_o.draw(mouse)
-        #s_o.draw(mouse)
-        
+        #s_o.draw(mouse)       
         p.display.flip()
         for event in p.event.get():
             if event.type == p.QUIT:
@@ -318,14 +320,13 @@ def run_ui():
                 p.quit()
         
     if Zero_order:
-
         game_obj =  Zero_Order(val)
         manager = Game_Manager(val,game_obj)
     if First_order:
         game_obj = First_Order(val)
         manager = Game_Manager(val,game_obj)
-    while Zero_order:
         
+    while Zero_order:     
         mouse = p.mouse.get_pos()
         clock.tick(fps)
         screen.fill(black)
@@ -354,10 +355,7 @@ def run_ui():
                 p.display.quit()
                 p.quit()
     
-        
-        
-        
-        
+
     p.display.quit()
     p.quit()
 run_ui()
