@@ -40,7 +40,7 @@ For zero order simulation, the simulation runs and ends, since there are no mode
 For first order simulation, after the kripke models have been generated, the simulation can be paused anytime by pressing **SPACEBAR** on the keyboard, you will see a message on the console confirming if the game is paused. While the game is paused, you can inspect each agent's knowledge about the other players by hovering the mouse over their body. Pressing **SPACEBAR** again resumes the game with a confirmation message in console. The game runs in a single flow and ends with either party victory.
 
 #### Demo
-
+![demo_1](img/demo_1.png)
 
 
 
