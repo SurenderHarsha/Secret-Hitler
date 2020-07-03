@@ -27,6 +27,14 @@ The multi-agent simulation's progression through a game is round-based. Agents a
 | **President votes Liberal**  |         Liberal         |         Facist         |
 | **President votes Facist**   |          Facist         |         Facist         |
 
+### The Interface
+The GUI is made using Pygame's native library found [here](https://www.pygame.org/news). We take the help of Mlsolver package to create and solve Kripke Models which can be found [here](https://github.com/erohkohl/mlsolver).
+
+The game consists of two modes -  Zero order and First Order. Since models do not need to be updated in zero order simulation, there can be 5-9 players in it, whereas the first order simulation can support only 5-6 players max. In the menu screen, the number of players can be entered by pressing the numbers 5-9 on the keyboard and then clicking on either zero order or first order to start the simulation.
+
+
+
+
 ### Epistemic Model
 We assume and model the players to play optimally to reduce complication, the game is straight-forward and we attempt to gradually add increasing layers of complexity like strategies.
 #### Model Variables
