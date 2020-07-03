@@ -50,6 +50,16 @@ In the voting phase, the votes are anonymous and the players do not know of each
 <p align="center">
 <img src="img/demo_2.PNG" width="300" height="300">
 </p>
+
+When the game is paused, users can hover their mouse over a player circle which will get highlighted by a yellow circle, which will they show the knowledge of that player about the other players in the game. It is checked with the kripke model using Mlsolver.
+
+<p align="center">
+<img src="img/demo_3.PNG" width="300" height="300">
+</p>
+
+As shown, we hover the mouse over a fascist player, who knows who the fascists are and who the liberals are(liberals are represented by blue birds and fascists by red skulls).
+
+
 ### Epistemic Model
 We assume and model the players to play optimally to reduce complication, the game is straight-forward and we attempt to gradually add increasing layers of complexity like strategies.
 #### Model Variables
