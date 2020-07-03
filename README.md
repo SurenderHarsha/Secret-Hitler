@@ -7,7 +7,8 @@ Authors:
 ## Introduction
 **Secret Hitler** is a social deduction card game that came to life via a very successful Kickstarter project. Around 5-10 people have to succeed in finding and stopping the Secret Hitler. Players are secretly divided into two teams: the liberals, who have a majority, and the fascists, who are hidden to everyone but each other. If the liberals can learn to trust each other, they have enough votes to control the elections and save the day. However, the fascists will say whatever it takes to get elected, advance their agenda, and win the game. The essence of the game is this: the fascists are in the minority, and will pretend to be liberals. The liberals don’t know who the fascists are, and it is crucial for them to figure this out in order to win. Every round, a policy (either liberal or fascist) is passed by two of the players. The passed policy is public information, and can be used by players to deduce likely fascists. In this way, the players have no direct information of who are fascists, but have indirect information. For example, if players A and B passed a fascist policy, they are likely to be fascists.
 
-In this project we aim to create a multi-agent simulation of the Secret Hitler game. To model the original game in all of its glory is too much to take on, so we will be implementing a simplified variant that is still representative of the original, but has shed some of its complicating details. In this simulation, the players of the game will be represented by the agents. Their tasks are still to figure out who the fascists are if you're a liberal, and to pass fascist policies if you're a fascist. In this way, each agent is tasked to match their internal beliefs the best as they can to the objective truth in the world they're in.
+In this project we aim to create a multi-agent simulation of the Secret Hitler game. To model the original game in all of its glory is too much to take on, so we will be implementing a simplified variant that is still representative of the original, but has shed some of its complicating details. In this simulation, the players of the game will be represented by the agents. Their tasks are still to figure out who the fascists are if you're a liberal, and to pass fascist policies if you're a fascist.
+
 ### Game Rules
 If you wish to get more familiar with the game in its original form, please refer to the rules [here](https://cdn.vapid.site/sites/a67e0c72-4902-4365-a899-3386df73c2c4/assets/Secret_Hitler_Rules-023bc755617986cb2276a3b6920e43e0.pdf).
 
@@ -29,47 +30,34 @@ The multi-agent simulation's progression through a game is round-based. Agents a
 
 ### Epistemic Model
 We assume and model the players to play optimally to reduce complication, the game is straight-forward and we attempt to gradually add increasing layers of complexity like strategies.
+
 #### Model Variables
-Each state 'S' has 'n' atoms where 'n' is the number of players in the game, each atom represents the faction of the players with '1' being a player is a 'Fascist' and '0' being a player is a 'Liberal'. 
+Each state 'S' has 'n' atoms where 'n' is the number of players in the game. Each atom represents the faction of a player.
 
 The model initially is created with <img src="https://render.githubusercontent.com/render/math?math=2^n"> states. The number of liberals is always greater than number of fascists. When the game begins, the fascists get to know each other and all the fascist relations except reflexive relations are eliminated. Relation set for a player consists of all the possible parties of other players, as the game progresses, these relations are eliminated.
 
 #### Public Announcements
-There are a total of 3 public announcements in the game.
-
-1.  President announcing/selecting the chancellor. (If a president is known to be a fascist, then automatically his chancellor is a fascist)
-2. Voting results announcement to know if the government(President and chancellor) can select policies or not. Voting is only as yes/no, and only the number of votes for yes/no is shown, but each player's vote is kept anonymous. (Players will remember this)
-3. Public announcement of Policy chosen.(As of now there is no strategy where a fascist will choose a liberal policy, we will implement this policy later on).
-
-After each public announcement, the model is updated with excluded relations, if at any stage, only the real world/state is left, the liberals automatically win as everyone knows who everyone is(this is very unlikely).
-
-#### Beliefs and Update rules
-The kripke models are updated after every public announcement and after every round. Update rules dictate when a relation should be removed/changed. For example, we say agent A believes that agent B is fascist as it has voted for a fascist policy two times in a row.
-
-We use belief in our models rather than knowledge for liberal agents as no liberal agent can know for sure about the identity of its peers. We can also say fascists have knowledge of who the other fascists are and also who the liberals are.
+Over the course of the game, the model is updated using public announcements. When a round finishes, the information from it is applied to the model using public announcements. The exact information depends on the policy passed, and is listed in the update rules in the next section
 
 #### Order of knowledge
-We experiment with different orders by implementing more complex strategies based on the order we are simulating. If it is a zero order simulation then,
+We experiment with different orders by implementing more complex strategies based on the order we are simulating. If it is a zero order simulation, then:
 
-* Fascist presidents choose a fascist chancellor.
+* Fascist presidents choose a random chancellor.
 * Fascists always pass fascist policy.
 * Liberals vote randomly, yes or no for the government.
 * Liberal president chooses a random player as chancellor.
 * Liberals always vote liberal policy.
 
-If it is a first order simulation then,
+If it is a first order simulation, then:
 
-* Fascist president chooses a fascist chancellor.
+* Fascist president chooses a random chancellor.
 * Fascist always passes a fascist policy.
 * Liberals vote no, if they believe the president or chancellor is a fascist, yes otherwise.
 * Liberal president chooses a player who he believes is **not** a fascist.
 * Liberals always vote a liberal policy.
 * Update rule: If fascist rule is passed, then president is fascist **or** chancellor is fascist.
 * Update rule: If liberal rule is passed, then president **and** chancellor are **not** fascists.
-* Update rule: If president is fascist, then it **implies** his chancellor is also fascist.
-
-Higher order of simulations will have strategies implemented in an iterative manner as to keep the complexity of the simulation in check.
-
+* Update rule: If the president is liberal and the chancellor is fascist, the president now knows the chancellor is fascist. The same applies when the chancellor is liberal and the president is fascist.
 
 ### The Interface
 The GUI is made using Pygame's native library found [here](https://www.pygame.org/news). We take the help of Mlsolver package to create and solve Kripke Models which can be found [here](https://github.com/erohkohl/mlsolver).
@@ -211,5 +199,6 @@ Due to the speed of generating and solving kripke models(first order requires re
 From the first chart, we can infer that liberals have an edge, as shown in the knowledge run in the program interface above, the fascists start scoring the beginning as everyone's role is hidden. But due to elimination and deduction(knowledge updates and public announcements) the liberals soon discover the fascists and make a perfect score, which explains why the fascists have a decent enough score than compared to liberals in zero order. In the original game, the liberals win if 5 liberal policies have been passed and the fascists win if 6 fascist policies have been passed,but in our case the fascists do not try to fool the liberalists since it is first order, therefore we decided to reduce the fascists policy required to 3, whose results are shown in the First order partial score chart. The fascists perfomance has improved, but their winrate still remains the same. We assume that upon increasing the number of players, the fascists are more difficult to get discovered completely which may give them a chance.
 
 We also assume that higher order simulations can model a realistic game where the fascists try to fool the liberalists thus creating a more balanced game.
+
 ## Discussion
 Coming Soon...

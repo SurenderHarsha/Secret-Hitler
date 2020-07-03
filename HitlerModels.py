@@ -111,11 +111,8 @@ class Zero_Order(object):
             
             if self.simulation:
                 time.sleep(2.5)
-            if self.is_liberal(self.president):
-                self.chancellor = choice(list(range(self.president)) + list(range(self.president + 1, self.n_players)))
-            else:
-                # Potential issue: this crashes if there is only 1 fascist in the game
-                self.chancellor = choice(list(range(self.president)) + list(range(self.president + 1, self.n_fascists)))
+            self.chancellor = choice(list(range(self.president)) + list(range(self.president + 1, self.n_players)))
+            
             self.votes = { n: False for n in range(self.n_players) } 
             if self.simulation:
                 time.sleep(2.5)
