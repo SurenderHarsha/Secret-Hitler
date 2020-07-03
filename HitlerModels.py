@@ -172,11 +172,7 @@ class Zero_Order(object):
             print('The liberals win!' if self.liberal_wins >= 5 else 'The fascists win!')
             time.sleep(2)
         self.done = True
-    def communicate(self):
-        #Pass on game state here to UI
-        
-        
-        pass
+
         
         
 class First_Order(object):
@@ -218,18 +214,22 @@ class First_Order(object):
         return result
     
     def preprocess(self):
+        self.game_state = "Generating Kripke Models"
+        #print("start")
         combination_numbers = combinations(range(self.n_players), self.n_fascists)
         self.possible_combinations = []
         for combo in combination_numbers:
             atoms = ["{}=fascist".format(p) for p in combo] + ["{}=liberal".format(p) for p in range(self.n_players) if p not in combo]
             self.possible_combinations.append(atoms)
-            
+        #print("end")
         self.worlds = [World("{}".format(idx), { atom: True for atom in atoms}) for idx, atoms in enumerate(self.possible_combinations)]
         self.n_worlds = len(self.worlds)
         
         self.models = []
         for player in range(self.n_players):
+            
             worlds = copy.deepcopy(self.worlds)
+            
             relations = {
                 # Just the liberal relations
                 (str(x), str(y)) for x, y in list(combinations((range(self.n_worlds)), 2))
@@ -237,8 +237,10 @@ class First_Order(object):
 
             relations.update(self.add_reflexive_edges(worlds, relations))
             relations.update(self.add_symmetric_edges(relations))
+            
             model = KripkeStructure(worlds, relations)
             atom = Atom('{}=fascist'.format(player)) if self.is_fascist(player) else Atom('{}=liberal'.format(player))
+            
             model = model.solve(atom)
             self.models.append(model)
         for player in range(self.n_players):
@@ -247,7 +249,7 @@ class First_Order(object):
                     if self.is_liberal(p):
                         a = Atom('{}=liberal'.format(p))
                         self.models[player] = self.models[player].solve(a)
-        
+        #print("done")
         t1 = threading.Thread(target=self.run_game)
         t1.start()
     def run_game(self):
@@ -360,7 +362,10 @@ class First_Order(object):
                         self.models[self.president] = self.models[self.president].solve(Atom('{}=fascist'.format(self.chancellor)))
                     if self.is_liberal(self.chancellor):
                         self.models[self.chancellor] = self.models[self.chancellor].solve(Atom('{}=fascist'.format(self.president)))
-                    
+            else:
+                self.game_state = "Vote Failed"
+                if self.simulation:
+                    time.sleep(1)
             if self.simulation:
                 time.sleep(2.5)
             while self.lock:
@@ -373,7 +378,7 @@ class First_Order(object):
             self.winner = 1
         #print('The liberals win!' if self.liberal_wins >= 5 else 'The fascists win!')
         self.done = True
-        
+        print("Game done")
         
 if __name__ == '__main__':
     print('NOTE: this runs the model without the UI')
