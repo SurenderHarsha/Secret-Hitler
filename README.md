@@ -81,8 +81,11 @@ A fascist policy has been passed since the president is a liberal and a chancell
 </p>
 All liberals still assume the other players are liberals except the previous president, since the previous president was a liberal and a fascist policy has been passed, his relations in the kripke model conclude that the previous chancellor was a fascist.
 
-
-
+**Step Four**
+<p align="center">
+<img src="img/demo_7.png" width="300" height="300">
+</p>
+A fascist poli
 ### Epistemic Model
 We assume and model the players to play optimally to reduce complication, the game is straight-forward and we attempt to gradually add increasing layers of complexity like strategies.
 #### Model Variables
