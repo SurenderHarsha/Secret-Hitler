@@ -70,6 +70,32 @@ If it is a first order simulation then,
 
 Higher order of simulations will have strategies implemented in an iterative manner as to keep the complexity of the simulation in check.
 
+## Kripke model
+There are several actions that can alter the Kripke model, so here we will formally show the effect of those actions on the game states. In this example we will use a first-order simulation with three agents A, B and C. Agents will believe another agent is fascist or liberal after just one passed policy, in order to simplify. In the simulation agents will only start to draw conclusions about the other agents' factions after multiple passed policies. Please note that reflexive relations are not drawn to minimiza clutter in the graphs.
+
+When worlds are no longer accesible by any agent, they will be removed. In theory, a simulation with 3 agents would result in 2^3=8 worlds. However, not all of these worlds are possible. It is impossible for the agent set to be fully liberal or fully fascist, so these worlds are excluded. The world that is the exact opposite of the ground truth is also not held possible for any agent and removed.
+
+Let's say agent A is a fascist, while agents B and C are liberals. At the start of the game, all agents know their own factions. Since agent A is a fascist, it knows that it is the only fascist and can already conclude that agents B and C must be liberals. In order to win the game and succeed, you will have to know the factions of the other agents. That way, you can reliably choose who to cooperate with and who you should avoid. Agents B and C now have to figure out this information and try to win the game. Note that agent B is already able to conclude that agent A and agent C cannot both be liberal, because there must be one fascist and agent B is liberal itself. This also holds true for agent C reasoning about agents A and B.
+
+A world accompanied with ```<f, l, l>``` represents the possibilty that agent A is fascist, agent B is liberal and agent C is liberal. Relations regarding agent B are drawn in green, and relations regarding agent C are drawn in blue. Since agent A is given perfect information from the game start, there are no relevant relations for it.
+
+![km_one](img/lamas_proj1.png)
+
+Agent A is selected as president and subsequently randomly selects agent B as chancelor. Agent C allows this government to be formed. Agent A is fascist and will always vote for a fascist policy. Agent B is liberal and will vote the opposite. This will cause a fascist policy to be passed.
+
+- Agent B has learned that Agent A is a fascist.
+
+![km_one](img/lamas_proj2.png)
+
+Agent B is selected as president and subsequently randomly chooses agent C as its chancelor. Agent A votes yes and allows this government to pass a policy. Both agents involved are liberals and will vote so. This causes a liberal policy to be passed.
+
+- Agent B has learned that Agent C is a liberal.
+- Agent C has learned that Agent B is a liberal.
+
+![km_one](img/lamas_proj3.png)
+
+After just two passed policies, the two liberal agents were able to figure out what faction the other agents belong to and just one possible world remains. We have to remember, of course, that in the real simulation it would take multiple involvements in passing fascist/liberal policies in order for agents to draw conclusions about other agents.
+
 
 ## Results
 Coming Soon..
