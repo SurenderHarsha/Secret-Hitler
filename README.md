@@ -194,7 +194,7 @@ Each experiment consists of a 1000 simulations of games and its results.
 The Zero order experiments have been run from 5 player games to 9 player games and we have plotted out a bar diagram to compare the scores(policies passed in all games combined) of both the factions.
 
 <p align="center">
-<img src="img/zero_order.png" width="300" height="300">
+<img src="img/zero_order.png" width="500" height="300">
 </p>
 
 The fascists score outweights the liberals score by a large margin, this is most likely due to how easy it is for fascists to score. The only time a liberal policy is passed(scored) is when both the president and chancellor are voted into power and they are both liberals. Thus, liberals scoring is a game of chance. Also we notice the trend where the liberal score decreases as the number of players increase, this is due to the addition of more liberals increasing more randomness and the addition of more fascists increases the fascists chances of winning.
