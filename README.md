@@ -52,12 +52,12 @@ If it is a first order simulation, then:
 
 * Fascist president chooses a random chancellor.
 * Fascist always passes a fascist policy.
-* Liberals vote no, if they believe the president or chancellor is a fascist, yes otherwise.
-* Liberal president chooses a player who he believes is **not** a fascist.
+* Liberals vote no, if they know that the president or chancellor is a fascist, yes otherwise.
+* Liberal president chooses a player who he knows is **not** a fascist.
 * Liberals always vote a liberal policy.
 * Update rule: If fascist rule is passed, then president is fascist **or** chancellor is fascist.
 * Update rule: If liberal rule is passed, then president **and** chancellor are **not** fascists.
-* Update rule: If the president is liberal and the chancellor is fascist, the president now knows the chancellor is fascist. The same applies when the chancellor is liberal and the president is fascist.
+* Update rule: If the president is liberal and the chancellor is fascist and after the fascist policy has been passed, the president now knows the chancellor is fascist. The same applies when the chancellor is liberal and the president is fascist.
 
 ### The Interface
 The GUI is made using Pygame's native library found [here](https://www.pygame.org/news). We take the help of Mlsolver package to create and solve Kripke Models which can be found [here](https://github.com/erohkohl/mlsolver).
@@ -65,6 +65,14 @@ The GUI is made using Pygame's native library found [here](https://www.pygame.or
 The game consists of two modes -  Zero order and First Order. Since models do not need to be updated in zero order simulation, there can be 5-9 players in it, whereas the first order simulation can support only 5-6 players max.
 
 #### Usage
+Run the script in the console using:
+
+if python3 is the only python on the system: `python HitlerUI.py`
+if python2 and python3 are on the system: `python3 HitlerUI.py`
+
+Make sure to run requirements.txt before running the script to install all necessary packages(Pygame and numpy). The package Mlsolver is already included in the repo as it is not an official pip package. 
+
+
 In the menu screen, the number of players can be entered by pressing the numbers 5-9 on the keyboard and then clicking on either zero order or first order to start the simulation. (Warning: First order can support only a max of 6 players, anymore and the simulation will stop responding).
 
 For zero order simulation, the simulation runs and ends, since there are no model updates, the simulation cannot be paused or inspected, it shows one single flow of the game.
